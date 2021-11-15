@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "238405463746",
+    "project_id": "ai-crc-3417c",
+    "storage_bucket": "ai-crc-3417c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:238405463746:android:76073c9ca01599bb54555b",
+        "android_client_info": {
+          "package_name": "com.example.mobliecontroller"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "238405463746-bsbval6dpu4ddsim58drumdo27hhm0bv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnlxtomJg6qD7M_dIAf7yb5_mA7aPyAe0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "238405463746-bsbval6dpu4ddsim58drumdo27hhm0bv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
