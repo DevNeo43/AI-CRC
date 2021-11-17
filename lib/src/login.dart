@@ -88,7 +88,7 @@ class _LogInState extends State<LogIn> {
                                   keyboardType: TextInputType.text,
                                   obscureText: true,
                                 ),
-                                SizedBox(height: 40.0),
+                                SizedBox(height: 30.0),
                                 ButtonTheme(
                                     minWidth: 100.0,
                                     height : 50.0,
