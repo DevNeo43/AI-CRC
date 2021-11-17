@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'control.dart';
 import 'signup.dart';
+import 'slider.dart';
 
 class LogIn extends StatefulWidget {
   const LogIn({Key? key}) : super(key: key);
@@ -17,6 +18,8 @@ class _LogInState extends State<LogIn> {
 
   @override
   Widget build(BuildContext context) {
+    // 가로모드
+    SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]);
     return Scaffold(
       appBar: AppBar(
         title: Text('Sign In'),
@@ -102,7 +105,7 @@ class _LogInState extends State<LogIn> {
                                       ),
                                       onPressed:  (){
                                         if(Controller.text == "park" && Controller2.text == "1234"){
-                                            Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>Control()));
+                                            Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>JoystickControl()));
                                           }else if(Controller.text !="park" && Controller2.text =="1234"){
                                             showSnackBarID(context);
                                           }else if(Controller.text =="park" && Controller2.text !="1234"){
