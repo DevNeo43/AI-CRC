@@ -105,7 +105,7 @@ class _LogInState extends State<LogIn> {
                                       ),
                                       onPressed:  (){
                                         if(Controller.text == "park" && Controller2.text == "1234"){
-                                            Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>JoystickControl()));
+                                            Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>JoystickExample()));
                                           }else if(Controller.text !="park" && Controller2.text =="1234"){
                                             showSnackBarID(context);
                                           }else if(Controller.text =="park" && Controller2.text !="1234"){

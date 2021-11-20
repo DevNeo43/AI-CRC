@@ -6,7 +6,6 @@ const step = 10.0;
 
 
 class JoystickControl extends StatefulWidget {
-
   const JoystickControl({Key? key}) : super(key: key);
 
   @override
@@ -65,9 +64,7 @@ class _JoystickExampleState extends State<JoystickControl> {
             Ball(_x, _y),
             Align(
               alignment: const Alignment(-0.9, 0.8),
-              child: Row(
-                children: [
-              Joystick(
+              child: Joystick(
                 mode: _joystickMode,
                 listener: (details) {
                 setState(() {
@@ -76,8 +73,18 @@ class _JoystickExampleState extends State<JoystickControl> {
                 });
                 },
                 ),
-              ],
             ),
+            Align(
+              alignment: const Alignment(-0.9, 0.8),
+              child: Joystick(
+                mode: _joystickMode,
+                listener: (details) {
+                  setState(() {
+                    _x = _x + step * details.x;
+                    _y = _y + step * details.y;
+                  });
+                },
+              ),
             )
           ],
         ),
