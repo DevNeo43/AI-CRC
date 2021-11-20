@@ -2,6 +2,7 @@
 // this file is not used in program
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_joystick/flutter_joystick.dart';
 
 const ballSize = 20.0;
@@ -27,6 +28,7 @@ class _JoystickExampleState extends State<JoystickExample> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIOverlays([]);
     return Scaffold(
       backgroundColor: Colors.green,
       body: SafeArea(
@@ -36,6 +38,41 @@ class _JoystickExampleState extends State<JoystickExample> {
               color: Colors.green,
             ),
             Ball(_x, _y),
+            Align(
+              alignment: const Alignment(2.0, 1.3),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      ElevatedButton(
+                          onPressed: () => {},
+                          child: Text("off"),
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.blue,
+                            onPrimary: Colors.white
+                          ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () => {},
+                        child: Text("강함"),
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.red,
+                            onPrimary: Colors.white
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () => {},
+                        child: Text("AUTO"),
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.greenAccent,
+                            onPrimary: Colors.white
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              ),
+            ),
             Align(
               alignment: const Alignment(-0.9, 0.8),
               child: Joystick(
@@ -59,7 +96,7 @@ class _JoystickExampleState extends State<JoystickExample> {
                   });
                 },
               ),
-            ),
+            )
           ],
         ),
       ),

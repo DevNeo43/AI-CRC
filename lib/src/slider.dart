@@ -58,34 +58,6 @@ class _JoystickExampleState extends State<JoystickControl> {
                 ),
               ],
             ),
-            Container(
-              color: Colors.green,
-            ),
-            Ball(_x, _y),
-            Align(
-              alignment: const Alignment(-0.9, 0.8),
-              child: Joystick(
-                mode: _joystickMode,
-                listener: (details) {
-                setState(() {
-                _x = _x + step * details.x;
-                _y = _y + step * details.y;
-                });
-                },
-                ),
-            ),
-            Align(
-              alignment: const Alignment(-0.9, 0.8),
-              child: Joystick(
-                mode: _joystickMode,
-                listener: (details) {
-                  setState(() {
-                    _x = _x + step * details.x;
-                    _y = _y + step * details.y;
-                  });
-                },
-              ),
-            )
           ],
         ),
       ),
