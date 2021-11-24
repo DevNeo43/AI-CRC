@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'control.dart';
 import 'signup.dart';
-import 'slider.dart';
 
 class LogIn extends StatefulWidget {
   const LogIn({Key? key}) : super(key: key);
@@ -38,12 +37,12 @@ class _LogInState extends State<LogIn> {
           return SingleChildScrollView(
             child: Column(
               children: <Widget>[
-                Padding(padding: EdgeInsets.only(top: 60)),
+                Padding(padding: EdgeInsets.only(top: 20)),
                 const Center(
                   child: Image(
                     image: AssetImage('images/logo.png'), //need to exchange images
-                    width: 100.0,
-                    height: 120.0,
+                    width: 80.0,
+                    height: 100.0,
                   ),
                 ),
                 SizedBox(height: 10),

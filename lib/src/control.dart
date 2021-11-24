@@ -19,6 +19,15 @@ class _JoystickExampleState extends State<JoystickExample> {
   double _x = 100;
   double _y = 100;
   JoystickMode _joystickMode = JoystickMode.vertical;
+  bool cmbscritta = false;
+
+  bool pressPower = false;
+  bool pressCleanPower = false;
+  bool pressAutoMode = false;
+
+  bool pressPowerText = false;
+  bool pressCleanPowerText = false;
+  bool pressAutoModeText = false;
 
   @override
   void didChangeDependencies() {
@@ -44,36 +53,60 @@ class _JoystickExampleState extends State<JoystickExample> {
                 children: [
                   Row(
                     children: [
-                      ElevatedButton(
-                          onPressed: () => {},
-                          child: Text("off"),
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.blue,
-                            onPrimary: Colors.white
+                      RaisedButton( // On/Off button
+                          shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(18.0),
+                              side: BorderSide(color: Colors.white60)
                           ),
+                          color: pressPower ? Colors.red : Colors.black,
+                          textColor: Colors.white,
+                          child: pressPowerText ? Text("On") : Text("Off"),
+                          //    style: TextStyle(fontSize: 14)
+                          onPressed: () {
+                            setState(() {
+                              pressPower = !pressPower;
+                              pressPowerText = !pressPowerText;
+                            });
+                          }
                       ),
-                      ElevatedButton(
-                        onPressed: () => {},
-                        child: Text("강함"),
-                        style: ElevatedButton.styleFrom(
-                            primary: Colors.red,
-                            onPrimary: Colors.white
-                        ),
+                      RaisedButton( // Motor Power button
+                          shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(18.0),
+                              side: BorderSide(color: Colors.white60)
+                          ),
+                          color: pressCleanPower ? Colors.blue : Colors.purpleAccent,
+                          textColor: Colors.white,
+                          child: pressCleanPowerText ? Text("Low") : Text("High"),
+                          //    style: TextStyle(fontSize: 14)
+                          onPressed: () {
+                            setState(() {
+                              pressCleanPower = !pressCleanPower;
+                              pressCleanPowerText = !pressCleanPowerText;
+                            });
+                          }
                       ),
-                      ElevatedButton(
-                        onPressed: () => {},
-                        child: Text("AUTO"),
-                        style: ElevatedButton.styleFrom(
-                            primary: Colors.greenAccent,
-                            onPrimary: Colors.white
-                        ),
+                      RaisedButton( //Mode button
+                          shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(18.0),
+                              side: BorderSide(color: Colors.white60)
+                          ),
+                          color: pressAutoMode ? Colors.brown : Colors.deepOrangeAccent,
+                          textColor: Colors.white,
+                          child: pressAutoModeText ? Text("Manual") : Text("Auto"),
+                          //    style: TextStyle(fontSize: 14)
+                          onPressed: () {
+                            setState(() {
+                              pressAutoMode = !pressAutoMode;
+                              pressAutoModeText = !pressAutoModeText;
+                            });
+                          }
                       )
                     ],
                   )
                 ],
               ),
             ),
-            Align(
+            Align( //joystick1
               alignment: const Alignment(-0.9, 0.8),
               child: Joystick(
                 mode: _joystickMode,
@@ -85,7 +118,7 @@ class _JoystickExampleState extends State<JoystickExample> {
                 },
               ),
             ),
-            Align(
+            Align( //joystick2
               alignment: const Alignment(0.9, 0.8),
               child: Joystick(
                 mode: _joystickMode,
