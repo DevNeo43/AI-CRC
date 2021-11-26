@@ -39,12 +39,12 @@ class _JoystickExampleState extends State<JoystickExample> {
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIOverlays([]);
     return Scaffold(
-      backgroundColor: Colors.green,
+      backgroundColor: Colors.white60,
       body: SafeArea(
         child: Stack(
           children: [
             Container(
-              color: Colors.green,
+              // color: Colors.black12,
             ),
             Ball(_x, _y),
             Align(

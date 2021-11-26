@@ -72,6 +72,7 @@ class _LogInState extends State<LogIn> {
                             )
                         ),
                         child: Container(
+                            width: 400.0,
                             padding: EdgeInsets.all(40.0),
                             child : Column(
                               children: <Widget>[
