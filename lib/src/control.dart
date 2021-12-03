@@ -19,7 +19,6 @@ class _JoystickExampleState extends State<JoystickExample> {
   double _x = 100;
   double _y = 100;
   JoystickMode _joystickMode = JoystickMode.vertical;
-  bool cmbscritta = false;
 
   bool pressPower = false;
   bool pressCleanPower = false;
@@ -43,6 +42,7 @@ class _JoystickExampleState extends State<JoystickExample> {
       body: SafeArea(
         child: Stack(
           children: [
+
             Container(
               // color: Colors.black12,
             ),

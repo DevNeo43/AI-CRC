@@ -37,6 +37,7 @@ class _LogInState extends State<LogIn> {
           return SingleChildScrollView(
             child: Column(
               children: <Widget>[
+                Image.network("http://192.168.0.6:8000/stream.mjpg"),
                 Padding(padding: EdgeInsets.only(top: 20)),
                 const Center(
                   child: Image(

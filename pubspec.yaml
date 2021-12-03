@@ -35,6 +35,7 @@ dependencies:
   firebase_core: ^1.10.0
   firebase_auth: ^3.2.0
   flutter_joystick: ^0.0.1
+  webview_flutter: ^2.3.1
 
 dev_dependencies:
   flutter_test:
