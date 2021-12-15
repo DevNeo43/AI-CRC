@@ -1,12 +1,21 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:mobliecontroller/src/login.dart';
-import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/services.dart';
+import 'package:flutter_joystick/flutter_joystick.dart';
+
+const ballSize = 20.0;
+const step = 20.0;
+
+String ipaddress = '192.168.0.9';
+int port = 9999;
+
 
 void main() async {
   await initialize();
+  Socket sock = await Socket.connect(ipaddress, port);
   runApp(myApp());
 }
 
@@ -15,15 +24,183 @@ initialize() async{
   await Firebase.initializeApp();
 }
 
+class myApp extends StatefulWidget {
+  const myApp({Key? key}) : super(key: key);
 
-class myApp extends StatelessWidget {
+  @override
+  _myAppState createState() => _myAppState();
+}
+
+class _myAppState extends State<myApp> {
+  // Socket? socket;
+
+  // myApp(Socket sock){
+  //   this.socket = sock;
+  // }
+
+  double _x = 100;
+  double _y = 100;
+  JoystickMode _joystickMode = JoystickMode.vertical;
+
+  bool pressPower = false;
+  bool pressCleanPower = false;
+  bool pressAutoMode = false;
+
+  bool pressPowerText = false;
+  bool pressCleanPowerText = false;
+  bool pressAutoModeText = false;
+
+  @override
+  void didChangeDependencies() {
+    _x = MediaQuery.of(context).size.width / 2 - ballSize / 2;
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'MobileController',
-      home: LogIn(),
+    SystemChrome.setEnabledSystemUIOverlays([]);
+    return Scaffold(
+      backgroundColor: Colors.white60,
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Container(
+              // color: Colors.black12,
+            ),
+            Ball(_x, _y),
+            Align(
+              alignment: const Alignment(2.0, 1.3),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      RaisedButton( // On/Off button
+                          shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(18.0),
+                              side: BorderSide(color: Colors.white60)
+                          ),
+                          color: pressPower ? Colors.red : Colors.black,
+                          textColor: Colors.white,
+                          child: pressPowerText ? Text("On") : Text("Off"),
+                          //    style: TextStyle(fontSize: 14)
+                          onPressed: () {
+                            setState(() {
+                              if(pressPower == true){
+                                // socket?.add(utf8.encode('P0'));
+                                // print('Send Data : P0');
+                              }
+                              else if(pressPower == false){
+                                //OffPush();
+                              }
+                              pressPower = !pressPower;
+                              pressPowerText = !pressPowerText;
+                            });
+                          }
+                      ),
+                      RaisedButton( // Motor Power button
+                          shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(18.0),
+                              side: BorderSide(color: Colors.white60)
+                          ),
+                          color: pressCleanPower ? Colors.blue : Colors.purpleAccent,
+                          textColor: Colors.white,
+                          child: pressCleanPowerText ? Text("Low") : Text("High"),
+                          //    style: TextStyle(fontSize: 14)
+                          onPressed: () {
+                            setState(() {
+                              pressCleanPower = !pressCleanPower;
+                              pressCleanPowerText = !pressCleanPowerText;
+                              //LowPush();
+                            });
+                          }
+                      ),
+                      RaisedButton( //Mode button
+                          shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(18.0),
+                              side: BorderSide(color: Colors.white60)
+                          ),
+                          color: pressAutoMode ? Colors.brown : Colors.deepOrangeAccent,
+                          textColor: Colors.white,
+                          child: pressAutoModeText ? Text("Manual") : Text("Auto"),
+                          //    style: TextStyle(fontSize: 14)
+                          onPressed: () {
+                            setState(() {
+                              if(pressAutoMode == true){
+                                //ManualPush();
+                              }
+                              else if(pressAutoMode == false){
+                                //AutoPush();
+                              }
+                              pressAutoMode = !pressAutoMode;
+                              pressAutoModeText = !pressAutoModeText;
+
+                            });
+                          }
+                      )
+                    ],
+                  )
+                ],
+              ),
+            ),
+            Align( //joystick1
+              alignment: const Alignment(-0.9, 0.8),
+              child: Joystick(
+                mode: _joystickMode,
+                listener: (details) {
+                  setState(() {
+                    _y = _y + step * details.y;
+                    print(100*details.y);
+                    //LeftJoyStick(_y);
+                  });
+
+                },
+              ),
+            ),
+            Align( //joystick2
+              alignment: const Alignment(0.9, 0.8),
+              child: Joystick(
+                mode: _joystickMode,
+                listener: (details) {
+                  setState(() {
+                    _y = _y + step * details.y;
+                  });
+                },
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class Ball extends StatelessWidget {
+  final double x;
+  final double y;
+
+  const Ball(this.x, this.y, {Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      left: x,
+      top: y,
+      child: Container(
+        width: ballSize,
+        height: ballSize,
+        decoration: const BoxDecoration(
+          shape: BoxShape.circle,
+          color: Colors.redAccent,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black12,
+              spreadRadius: 2,
+              blurRadius: 3,
+              offset: Offset(0, 3),
+            )
+          ],
+        ),
+      ),
     );
   }
 }

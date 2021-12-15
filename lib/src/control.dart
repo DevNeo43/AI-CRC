@@ -11,6 +11,9 @@ import 'package:mobliecontroller/main.dart';
 const ballSize = 20.0;
 const step = 20.0;
 
+String ipaddress = '192.168.0.9';
+int port = 9999;
+
 class JoystickExample extends StatefulWidget {
   const JoystickExample({Key? key}) : super(key: key);
 
@@ -31,8 +34,6 @@ class _JoystickExampleState extends State<JoystickExample> {
   bool pressCleanPowerText = false;
   bool pressAutoModeText = false;
 
-  
-
   @override
   void didChangeDependencies() {
     _x = MediaQuery.of(context).size.width / 2 - ballSize / 2;
@@ -47,7 +48,6 @@ class _JoystickExampleState extends State<JoystickExample> {
       body: SafeArea(
         child: Stack(
           children: [
-
             Container(
               // color: Colors.black12,
             ),
@@ -70,7 +70,8 @@ class _JoystickExampleState extends State<JoystickExample> {
                           onPressed: () {
                             setState(() {
                               if(pressPower == true){
-                                OnPush();
+                                // socket?.add(utf8.encode('P0'));
+                                // print('Send Data : P0');
                               }
                               else if(pressPower == false){
                                 OffPush();
@@ -188,12 +189,8 @@ class Ball extends StatelessWidget {
   }
 }
 
-String ipaddress = '192.168.0.9';
-int port = 9999;
-
 void OnPush() async{
   Socket socket = await Socket.connect(ipaddress, port);
-
   socket.listen((List<int> event){
     print(utf8.decode(event));
   });
