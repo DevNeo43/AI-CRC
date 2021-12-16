@@ -1,3 +1,5 @@
+// playground dart file
+// this file is not used in program
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -5,13 +7,11 @@ import 'package:flutter_joystick/flutter_joystick.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'package:mobliecontroller/main.dart';
-
 
 const ballSize = 20.0;
 const step = 20.0;
 
-String ipaddress = '192.168.0.9';
+String ipaddress = '172.20.10.12';
 int port = 9999;
 
 class JoystickExample extends StatefulWidget {
@@ -24,7 +24,7 @@ class JoystickExample extends StatefulWidget {
 class _JoystickExampleState extends State<JoystickExample> {
   double _x = 100;
   double _y = 100;
-  JoystickMode _joystickMode = JoystickMode.vertical;
+  JoystickMode _joystickMode = JoystickMode.horizontalAndVertical;
 
   bool pressPower = false;
   bool pressCleanPower = false;
@@ -66,12 +66,10 @@ class _JoystickExampleState extends State<JoystickExample> {
                           color: pressPower ? Colors.red : Colors.black,
                           textColor: Colors.white,
                           child: pressPowerText ? Text("On") : Text("Off"),
-                          //    style: TextStyle(fontSize: 14)
                           onPressed: () {
                             setState(() {
                               if(pressPower == true){
-                                // socket?.add(utf8.encode('P0'));
-                                // print('Send Data : P0');
+                                OnPush();
                               }
                               else if(pressPower == false){
                                 OffPush();
@@ -94,7 +92,6 @@ class _JoystickExampleState extends State<JoystickExample> {
                             setState(() {
                               pressCleanPower = !pressCleanPower;
                               pressCleanPowerText = !pressCleanPowerText;
-                              LowPush();
                             });
                           }
                       ),
@@ -110,14 +107,13 @@ class _JoystickExampleState extends State<JoystickExample> {
                           onPressed: () {
                             setState(() {
                               if(pressAutoMode == true){
-                                ManualPush();
+                                AutoPush();
                               }
                               else if(pressAutoMode == false){
-                                AutoPush();
+                                ManualPush();
                               }
                               pressAutoMode = !pressAutoMode;
                               pressAutoModeText = !pressAutoModeText;
-
                             });
                           }
                       )
@@ -132,11 +128,26 @@ class _JoystickExampleState extends State<JoystickExample> {
                 mode: _joystickMode,
                 listener: (details) {
                   setState(() {
+                    _x = _x + step * details.x;
                     _y = _y + step * details.y;
-                    print(100*details.y);
-                    LeftJoyStick(_y);
+                    print('================');
+                    print('x : ${details.x}');
+                    print('y : ${details.y}');
+                    if(details.x<0){
+                      LeftTurn();
+                    }
+                    else if(details.x==0){
+                      if(details.y>=0){
+                        Back();
+                      }
+                      else{
+                        Go();
+                      }
+                    }
+                    else if(details.x>0){
+                      RightTurn();
+                    }
                   });
-
                 },
               ),
             ),
@@ -201,7 +212,6 @@ void OnPush() async{
 }
 void OffPush() async{
   Socket socket = await Socket.connect(ipaddress, port);
-
   socket.listen((List<int> event){
     print(utf8.decode(event));
   });
@@ -216,7 +226,7 @@ void LowPush() async{
   socket.listen((List<int> event){
     print(utf8.decode(event));
   });
-  socket.add(utf8.encode('SL'));
+    socket.add(utf8.encode('SL'));
   await Future.delayed(Duration(seconds: 5));
 
   socket.close();
@@ -238,19 +248,51 @@ void AutoPush() async{
   socket.listen((List<int> event){
     print(utf8.decode(event));
   });
-  socket.add(utf8.encode('CM'));
+  socket.add(utf8.encode('CA'));
   await Future.delayed(Duration(seconds: 5));
 
   socket.close();
 }
-void LeftJoyStick(double _y) async{
+void Go() async{
   Socket socket = await Socket.connect(ipaddress, port);
 
   socket.listen((List<int> event){
     print(utf8.decode(event));
   });
-  double data = 100 * _y;
-  socket.add(utf8.encode(data.toString()));
+  socket.add(utf8.encode('GO'));
+  await Future.delayed(Duration(seconds: 5));
+
+  socket.close();
+}
+void Back() async{
+  Socket socket = await Socket.connect(ipaddress, port);
+
+  socket.listen((List<int> event){
+    print(utf8.decode(event));
+  });
+  socket.add(utf8.encode('BACK'));
+  await Future.delayed(Duration(seconds: 5));
+
+  socket.close();
+}
+void LeftTurn() async{
+  Socket socket = await Socket.connect(ipaddress, port);
+
+  socket.listen((List<int> event){
+    print(utf8.decode(event));
+  });
+  socket.add(utf8.encode('L'));
+  await Future.delayed(Duration(seconds: 5));
+
+  socket.close();
+}
+void RightTurn() async{
+  Socket socket = await Socket.connect(ipaddress, port);
+
+  socket.listen((List<int> event){
+    print(utf8.decode(event));
+  });
+  socket.add(utf8.encode('R'));
   await Future.delayed(Duration(seconds: 5));
 
   socket.close();
